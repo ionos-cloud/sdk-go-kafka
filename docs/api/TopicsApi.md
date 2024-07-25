@@ -286,7 +286,7 @@ import (
 
 func main() {
     clusterId := "e69b22a5-8fee-56b1-b6fb-4a07e4205ead" // string | The ID (UUID) of the Cluster.
-    topicCreate := *openapiclient.NewTopicCreate(*openapiclient.NewTopic("my-kafka-cluster-topic", int32(3), int32(3), *openapiclient.NewTopicLogRetention(int32(86400000), int32(1073741824)))) // TopicCreate | Topic to create.
+    topicCreate := *openapiclient.NewTopicCreate(*openapiclient.NewTopic("my-kafka-cluster-topic")) // TopicCreate | Topic to create.
 
     configuration := ionoscloud.NewConfiguration("USERNAME", "PASSWORD", "TOKEN", "HOST_URL")
     apiClient := ionoscloud.NewAPIClient(configuration)

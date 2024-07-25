@@ -4,14 +4,14 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**RetentionTime** | **int32** | The time in milliseconds that a message is retained in the topic log. Messages older than the retention time are deleted. If value is &#x60;0&#x60;, messages are retained indefinitely unless other retention is set.  | [default to 0]|
-|**SegmentBytes** | **int32** | The maximum size in bytes that the topic log can grow to. When the log reaches this size, the oldest messages are deleted. If value is &#x60;0&#x60;, messages are retained indefinitely unless other retention is set.  | [default to 0]|
+|**RetentionTime** | Pointer to **int32** | This configuration controls the maximum time we will retain a log before we will discard old log  segments to free up space.  This represents an SLA on how soon consumers must read their data. If set to -1,  no time limit is applied.  | [optional] [default to 604800000]|
+|**SegmentBytes** | Pointer to **int32** | This configuration controls the segment file size for the log. Retention and cleaning is always done a file at a time so a larger segment size means fewer files but less granular control over retention.  | [optional] [default to 1073741824]|
 
 ## Methods
 
 ### NewTopicLogRetention
 
-`func NewTopicLogRetention(retentionTime int32, segmentBytes int32, ) *TopicLogRetention`
+`func NewTopicLogRetention() *TopicLogRetention`
 
 NewTopicLogRetention instantiates a new TopicLogRetention object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +45,11 @@ and a boolean to check if the value has been set.
 
 SetRetentionTime sets RetentionTime field to given value.
 
+### HasRetentionTime
+
+`func (o *TopicLogRetention) HasRetentionTime() bool`
+
+HasRetentionTime returns a boolean if a field has been set.
 
 ### GetSegmentBytes
 
@@ -65,5 +70,10 @@ and a boolean to check if the value has been set.
 
 SetSegmentBytes sets SegmentBytes field to given value.
 
+### HasSegmentBytes
+
+`func (o *TopicLogRetention) HasSegmentBytes() bool`
+
+HasSegmentBytes returns a boolean if a field has been set.
 
 

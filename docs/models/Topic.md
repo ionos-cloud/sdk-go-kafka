@@ -5,15 +5,15 @@
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
 |**Name** | **string** | The name of the Kafka cluster topic. Must be 63 characters or less and must begin and end with an alphanumeric character (&#x60;[a-z0-9A-Z]&#x60;) with dashes (&#x60;-&#x60;), underscores (&#x60;_&#x60;), dots (&#x60;.&#x60;), and alphanumerics between.  | |
-|**ReplicationFactor** | **int32** | The number of replicas of the topic. The replication factor determines how many copies of the topic are stored on different brokers. The replication factor must be less than or equal to the number of brokers in the Kafka cluster.  | |
-|**NumberOfPartitions** | **int32** | The number of partitions of the topic. Partitions allow for parallel processing of messages. The partition count must be greater than or equal to the replication factor.  | |
-|**LogRetention** | [**TopicLogRetention**](TopicLogRetention.md) |  | |
+|**ReplicationFactor** | Pointer to **int32** | The number of replicas of the topic. The replication factor determines how many copies of the topic are stored on different brokers. The replication factor must be less than or equal to the number of brokers in the Kafka cluster.  | [optional] [default to 3]|
+|**NumberOfPartitions** | Pointer to **int32** | The number of partitions of the topic. Partitions allow for parallel processing of messages.  | [optional] [default to 3]|
+|**LogRetention** | Pointer to [**TopicLogRetention**](TopicLogRetention.md) |  | [optional] |
 
 ## Methods
 
 ### NewTopic
 
-`func NewTopic(name string, replicationFactor int32, numberOfPartitions int32, logRetention TopicLogRetention, ) *Topic`
+`func NewTopic(name string, ) *Topic`
 
 NewTopic instantiates a new Topic object
 This constructor will assign default values to properties that have it defined,
@@ -67,6 +67,11 @@ and a boolean to check if the value has been set.
 
 SetReplicationFactor sets ReplicationFactor field to given value.
 
+### HasReplicationFactor
+
+`func (o *Topic) HasReplicationFactor() bool`
+
+HasReplicationFactor returns a boolean if a field has been set.
 
 ### GetNumberOfPartitions
 
@@ -87,6 +92,11 @@ and a boolean to check if the value has been set.
 
 SetNumberOfPartitions sets NumberOfPartitions field to given value.
 
+### HasNumberOfPartitions
+
+`func (o *Topic) HasNumberOfPartitions() bool`
+
+HasNumberOfPartitions returns a boolean if a field has been set.
 
 ### GetLogRetention
 
@@ -107,5 +117,10 @@ and a boolean to check if the value has been set.
 
 SetLogRetention sets LogRetention field to given value.
 
+### HasLogRetention
+
+`func (o *Topic) HasLogRetention() bool`
+
+HasLogRetention returns a boolean if a field has been set.
 
 
