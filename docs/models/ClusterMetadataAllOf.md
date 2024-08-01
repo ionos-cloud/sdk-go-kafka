@@ -4,7 +4,6 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**BootstrapAddress** | Pointer to **string** | the bootstrap IP address and port. | [optional] |
 |**BrokerAddresses** | Pointer to **[]string** | IP addresses and ports of cluster brokers. | [optional] |
 
 ## Methods
@@ -25,31 +24,6 @@ will change when the set of required properties is changed
 NewClusterMetadataAllOfWithDefaults instantiates a new ClusterMetadataAllOf object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetBootstrapAddress
-
-`func (o *ClusterMetadataAllOf) GetBootstrapAddress() string`
-
-GetBootstrapAddress returns the BootstrapAddress field if non-nil, zero value otherwise.
-
-### GetBootstrapAddressOk
-
-`func (o *ClusterMetadataAllOf) GetBootstrapAddressOk() (*string, bool)`
-
-GetBootstrapAddressOk returns a tuple with the BootstrapAddress field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBootstrapAddress
-
-`func (o *ClusterMetadataAllOf) SetBootstrapAddress(v string)`
-
-SetBootstrapAddress sets BootstrapAddress field to given value.
-
-### HasBootstrapAddress
-
-`func (o *ClusterMetadataAllOf) HasBootstrapAddress() bool`
-
-HasBootstrapAddress returns a boolean if a field has been set.
 
 ### GetBrokerAddresses
 

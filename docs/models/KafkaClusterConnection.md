@@ -6,14 +6,13 @@
 |------------ | ------------- | ------------- | -------------|
 |**DatacenterId** | **string** | The datacenter to connect your instance to. | |
 |**LanId** | **string** | The numeric LAN ID to connect your instance to. | |
-|**Cidr** | **string** | The IP and subnet for your instance. Note the following unavailable IP range: 10.244.0.0/11  | |
-|**BrokerAddresses** | Pointer to **[]string** | IP addresses and subnet of cluster brokers. Note the following unavailable IP range: 10.224.0.0/11  | [optional] |
+|**BrokerAddresses** | **[]string** | IP addresses and subnet of cluster brokers. Note the following unavailable IP range: 10.224.0.0/11  | |
 
 ## Methods
 
 ### NewKafkaClusterConnection
 
-`func NewKafkaClusterConnection(datacenterId string, lanId string, cidr string, ) *KafkaClusterConnection`
+`func NewKafkaClusterConnection(datacenterId string, lanId string, brokerAddresses []string, ) *KafkaClusterConnection`
 
 NewKafkaClusterConnection instantiates a new KafkaClusterConnection object
 This constructor will assign default values to properties that have it defined,
@@ -68,26 +67,6 @@ and a boolean to check if the value has been set.
 SetLanId sets LanId field to given value.
 
 
-### GetCidr
-
-`func (o *KafkaClusterConnection) GetCidr() string`
-
-GetCidr returns the Cidr field if non-nil, zero value otherwise.
-
-### GetCidrOk
-
-`func (o *KafkaClusterConnection) GetCidrOk() (*string, bool)`
-
-GetCidrOk returns a tuple with the Cidr field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCidr
-
-`func (o *KafkaClusterConnection) SetCidr(v string)`
-
-SetCidr sets Cidr field to given value.
-
-
 ### GetBrokerAddresses
 
 `func (o *KafkaClusterConnection) GetBrokerAddresses() []string`
@@ -107,10 +86,5 @@ and a boolean to check if the value has been set.
 
 SetBrokerAddresses sets BrokerAddresses field to given value.
 
-### HasBrokerAddresses
-
-`func (o *KafkaClusterConnection) HasBrokerAddresses() bool`
-
-HasBrokerAddresses returns a boolean if a field has been set.
 
 

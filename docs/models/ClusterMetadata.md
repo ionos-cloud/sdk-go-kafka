@@ -11,9 +11,8 @@
 |**LastModifiedBy** | Pointer to **string** | Unique name of the identity that last modified the resource. | [optional] [readonly] |
 |**LastModifiedByUserId** | Pointer to **string** | Unique id of the identity that last modified the resource. | [optional] [readonly] |
 |**ResourceURN** | Pointer to **string** | Unique name of the resource. | [optional] [readonly] |
-|**State** | **string** | State of the resource. Resource states: &#x60;AVAILABLE&#x60;: There are no pending modification requests for this item. &#x60;BUSY&#x60;: There is at least one modification request pending and all following requests will be queued. &#x60;DEPLOYING&#x60;: The resource is being created. &#x60;FAILED&#x60;: The creation of the resource failed. &#x60;UPDATING&#x60;: The resource is being updated. &#x60;FAILED_UPDATING&#x60;: An update to the resource was not successful.  | |
+|**State** | **string** | State of the resource. Resource states: &#x60;AVAILABLE&#x60;: There are no pending modification requests for this item. &#x60;BUSY&#x60;: There is at least one modification request pending and all following requests will be queued. &#x60;DEPLOYING&#x60;: The resource is being created. &#x60;FAILED&#x60;: The creation of the resource failed. &#x60;UPDATING&#x60;: The resource is being updated. &#x60;FAILED_UPDATING&#x60;: An update to the resource was not successful. &#x60;DESTROYING&#x60;: A delete command was issued, and the resource is being deleted.  | |
 |**Message** | Pointer to **string** | A human readable message describing the current state. In case of an error, the message will contain a detailed error message.  | [optional] |
-|**BootstrapAddress** | Pointer to **string** | the bootstrap IP address and port. | [optional] |
 |**BrokerAddresses** | Pointer to **[]string** | IP addresses and ports of cluster brokers. | [optional] |
 
 ## Methods
@@ -254,31 +253,6 @@ SetMessage sets Message field to given value.
 `func (o *ClusterMetadata) HasMessage() bool`
 
 HasMessage returns a boolean if a field has been set.
-
-### GetBootstrapAddress
-
-`func (o *ClusterMetadata) GetBootstrapAddress() string`
-
-GetBootstrapAddress returns the BootstrapAddress field if non-nil, zero value otherwise.
-
-### GetBootstrapAddressOk
-
-`func (o *ClusterMetadata) GetBootstrapAddressOk() (*string, bool)`
-
-GetBootstrapAddressOk returns a tuple with the BootstrapAddress field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBootstrapAddress
-
-`func (o *ClusterMetadata) SetBootstrapAddress(v string)`
-
-SetBootstrapAddress sets BootstrapAddress field to given value.
-
-### HasBootstrapAddress
-
-`func (o *ClusterMetadata) HasBootstrapAddress() bool`
-
-HasBootstrapAddress returns a boolean if a field has been set.
 
 ### GetBrokerAddresses
 

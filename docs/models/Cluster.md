@@ -6,7 +6,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**Name** | **string** | The name of your Kafka cluster. Must be 63 characters or less and must begin and end with an alphanumeric character (&#x60;[a-z0-9A-Z]&#x60;) with dashes (&#x60;-&#x60;), underscores (&#x60;_&#x60;), dots (&#x60;.&#x60;), and alphanumerics between.  | |
 |**Version** | **string** | The version of Kafka. Currently only Kafka Version 3.7.0 is supported.  | |
-|**Size** | **string** | The size of your Kafka cluster. The size of the Kafka cluster is given in T-shirt sizes. Valid values are: \&quot;S\&quot;  | |
+|**Size** | **string** | The size of your Kafka cluster. The size of the Kafka cluster is given in T-shirt sizes. Valid values are: XS, S  | |
 |**Connections** | [**[]KafkaClusterConnection**](KafkaClusterConnection.md) |  | |
 
 ## Methods
