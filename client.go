@@ -1,9 +1,9 @@
 /*
- * Kafka as a Service API
+ * Event Streams for Apache Kafka API
  *
- * An managed Apache Kafka cluster is designed to be highly fault-tolerant and scalable, allowing large volumes of data to be ingested, stored, and processed in real-time. By distributing data across multiple brokers, Kafka achieves high throughput and low latency, making it suitable for applications requiring real-time data processing and analytics.
+ * A managed Apache Kafka cluster is designed to be highly fault-tolerant and scalable, allowing large volumes of data to be ingested, stored, and processed in real-time. By distributing data across multiple brokers, Kafka achieves high throughput and low latency, making it suitable for applications requiring real-time data processing and analytics.
  *
- * API version: 1.7.1
+ * API version: 1.8.0
  * Contact: support@cloud.ionos.com
  */
 
@@ -51,10 +51,10 @@ const (
 	RequestStatusFailed  = "FAILED"
 	RequestStatusDone    = "DONE"
 
-	Version = "1.1.2"
+	Version = "1.1.3"
 )
 
-// APIClient manages communication with the Kafka as a Service API API v1.7.1
+// APIClient manages communication with the Event Streams for Apache Kafka API API v1.8.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -262,8 +262,15 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, time.Duratio
 			}
 		}
 
-		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Trace) {
-			dump, err := httputil.DumpRequestOut(clonedRequest, true)
+		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Debug) {
+			logRequest := request.Clone(request.Context())
+
+			// Remove the Authorization header if Debug is enabled (but not in Trace mode)
+			if !c.cfg.LogLevel.Satisfies(Trace) {
+				logRequest.Header.Del("Authorization")
+			}
+
+			dump, err := httputil.DumpRequestOut(logRequest, true)
 			if err == nil {
 				c.cfg.Logger.Printf(" DumpRequestOut : %s\n", string(dump))
 			} else {
@@ -280,7 +287,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, time.Duratio
 			return resp, httpRequestTime, err
 		}
 
-		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Trace) {
+		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Debug) {
 			dump, err := httputil.DumpResponse(resp, true)
 			if err == nil {
 				c.cfg.Logger.Printf("\n DumpResponse : %s\n", string(dump))

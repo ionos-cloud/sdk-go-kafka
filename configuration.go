@@ -1,9 +1,9 @@
 /*
- * Kafka as a Service API
+ * Event Streams for Apache Kafka API
  *
- * An managed Apache Kafka cluster is designed to be highly fault-tolerant and scalable, allowing large volumes of data to be ingested, stored, and processed in real-time. By distributing data across multiple brokers, Kafka achieves high throughput and low latency, making it suitable for applications requiring real-time data processing and analytics.
+ * A managed Apache Kafka cluster is designed to be highly fault-tolerant and scalable, allowing large volumes of data to be ingested, stored, and processed in real-time. By distributing data across multiple brokers, Kafka achieves high throughput and low latency, making it suitable for applications requiring real-time data processing and analytics.
  *
- * API version: 1.7.1
+ * API version: 1.8.0
  * Contact: support@cloud.ionos.com
  */
 
@@ -39,12 +39,13 @@ var (
 	IonosServerUrls = []string{
 		"https://kafka.de-fra.ionos.com",
 		"https://kafka.de-txl.ionos.com",
-		"https://kafka.es-vit.ionos.com",
 		"https://kafka.gb-lhr.ionos.com",
+		"https://kafka.gb-bhx.ionos.com",
+		"https://kafka.fr-par.ionos.com",
+		"https://kafka.es-vit.ionos.com",
+		"https://kafka.us-mci.ionos.com",
 		"https://kafka.us-ewr.ionos.com",
 		"https://kafka.us-las.ionos.com",
-		"https://kafka.us-mci.ionos.com",
-		"https://kafka.fr-par.ionos.com",
 	}
 )
 
@@ -142,7 +143,7 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 	cfg := &Configuration{
 		DefaultHeader:      make(map[string]string),
 		DefaultQueryParams: url.Values{},
-		UserAgent:          "ionos-cloud-sdk-go-kafka/v1.1.2",
+		UserAgent:          "ionos-cloud-sdk-go-kafka/v1.1.3",
 		Debug:              false,
 		Username:           username,
 		Password:           password,
@@ -155,35 +156,39 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 		Servers: ServerConfigurations{
 			{
 				URL:         "https://kafka.de-fra.ionos.com",
-				Description: "Production de-fra",
+				Description: "service endpoint for location de-fra",
 			},
 			{
 				URL:         "https://kafka.de-txl.ionos.com",
-				Description: "Production de-txl",
-			},
-			{
-				URL:         "https://kafka.es-vit.ionos.com",
-				Description: "Production es-vit",
+				Description: "service endpoint for location de-txl",
 			},
 			{
 				URL:         "https://kafka.gb-lhr.ionos.com",
-				Description: "Production gb-lhr",
+				Description: "service endpoint for location gb-lhr",
 			},
 			{
-				URL:         "https://kafka.us-ewr.ionos.com",
-				Description: "Production us-ewr",
-			},
-			{
-				URL:         "https://kafka.us-las.ionos.com",
-				Description: "Production us-las",
-			},
-			{
-				URL:         "https://kafka.us-mci.ionos.com",
-				Description: "Production us-mci",
+				URL:         "https://kafka.gb-bhx.ionos.com",
+				Description: "service endpoint for location gb-bhx",
 			},
 			{
 				URL:         "https://kafka.fr-par.ionos.com",
-				Description: "Production fr-par",
+				Description: "service endpoint for location fr-par",
+			},
+			{
+				URL:         "https://kafka.es-vit.ionos.com",
+				Description: "service endpoint for location es-vit",
+			},
+			{
+				URL:         "https://kafka.us-mci.ionos.com",
+				Description: "service endpoint for location us-mci",
+			},
+			{
+				URL:         "https://kafka.us-ewr.ionos.com",
+				Description: "service endpoint for location us-ewr",
+			},
+			{
+				URL:         "https://kafka.us-las.ionos.com",
+				Description: "service endpoint for location us-las",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},
@@ -219,6 +224,12 @@ func (sc ServerConfigurations) URL(index int, variables map[string]string) (stri
 	}
 	server := sc[index]
 	url := server.URL
+	if !strings.Contains(url, "http://") && !strings.Contains(url, "https://") {
+		return "", fmt.Errorf(
+			"the URL provided appears to be missing the protocol scheme prefix (\"https://\" or \"http://\"), please verify and try again: %s",
+			url,
+		)
+	}
 
 	// go through variables and replace placeholders
 	for name, variable := range server.Variables {
@@ -301,14 +312,12 @@ func getServerUrl(serverUrl string) string {
 	if serverUrl == "" {
 		return DefaultIonosServerUrl
 	}
-	// Support both HTTPS & HTTP schemas
-	if !strings.HasPrefix(serverUrl, "https://") && !strings.HasPrefix(serverUrl, "http://") {
-		serverUrl = fmt.Sprintf("https://%s", serverUrl)
-	}
+
 	if !strings.HasSuffix(serverUrl, DefaultIonosBasePath) {
 		serverUrl = fmt.Sprintf("%s%s", serverUrl, DefaultIonosBasePath)
 	}
-	return serverUrl
+
+	return EnsureURLFormat(serverUrl)
 }
 
 // ServerURLWithContext returns a new server URL given an endpoint
